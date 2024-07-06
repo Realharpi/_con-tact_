@@ -1,0 +1,339 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.too-small{
+    display: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;       /* Can't scroll on the body */
+}
+
+.section-container {
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 48vh;
+    z-index: 3;
+    background-color: white;
+}
+
+.section-container .parent-container {
+    margin-bottom: 1.5rem;
+    padding: .75rem 2rem;
+    box-shadow: 2px 2px 7px 1px rgba(0, 0, 0, 0.40);
+    background: rgb(225, 225, 225);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icons {
+    font-size: 1rem;
+    display: inline-block;
+    margin: 0 .5rem;
+}
+
+.icons:hover {
+    cursor: pointer;
+    color: #78c223;
+}
+
+.child-container {
+    position: relative;
+}
+
+#filterInput {
+    display: none;
+    width: 120px;
+    border-radius: 10px;
+    border-color: white;
+    padding: 4px 45px 4px 15px;
+    position: absolute;
+    top: 2.5rem;
+    right: 0;
+    z-index: 10;
+}
+
+.search-container #filterInput {
+    display: block;
+}
+
+
+#addInput {
+    display: none;
+    width: 120px;
+    border-radius: 10px;
+    border-color: white;
+    padding: 4px 45px 4px 15px;
+    position: absolute;
+    top: 2.5rem;
+    right: 0;
+    margin: auto;
+    z-index: 10;
+}
+
+.add-container #addInput {
+    display: block;
+}
+
+
+
+
+/* List */
+.iisection-container {
+    width: 45vh;
+    height: 90vh;
+    pointer-events: auto;       /* Mouse will interactive with it */
+    overflow: scroll !important;
+    position: absolute;
+    top: 7rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+}
+
+.iisection-container .parent-container {
+    z-index: -1;
+    margin-bottom: 1.5rem;
+}
+
+.iisection-container .parent-container:last-child {
+    margin-bottom: 5rem;
+}
+
+.iisection-container h3 {
+    background-color: gray;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    background-color: white;
+    color: black;
+    padding-bottom: .2rem;
+}
+
+li:hover {
+    cursor: pointer;
+    background-color: rgb(225, 225, 225);
+}
+
+/* When the list is open */
+li.height {
+    height: 60px;
+}
+
+li.height .list-icons {
+    display: inline-block;
+    padding: 10px;
+}
+
+li .hide {
+    display: none;
+}
+
+.list-icons span {
+    visibility: hidden;
+    padding: .2rem;
+    position: absolute;
+    top: 4.5rem;
+    background-color: rgb(225, 225, 225);
+}
+
+.list-icons:hover  {
+    cursor: pointer;
+    color: #78c223;
+}
+
+.list-icons:hover span {
+    visibility: visible;
+}
+
+
+
+/* Modal */
+.backdrop {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+    position: fixed;
+    display: none;
+    z-index: 11;
+    top: 20%;
+    left: 30%;
+    width: 30%;
+    background: white;
+    padding: 4rem;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    color: black;
+    text-align: center;
+}
+
+.modal.animIn, .backdrop.animIn {
+    display: block;
+    animation: fadeIn 1s;
+}
+
+.modal.animOut, .backdrop.animOut {
+    animation: fadeOut 1s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0; z-index: -1;}
+}
+
+.modal_title {
+    text-align: center;
+    margin: 0 0 1rem 0;
+}
+
+.modal_actions {
+    text-align: center;
+}
+
+.modal_action {
+    border: 1px solid #78c223;
+    background: #78c223;
+    text-decoration: none;
+    color: white;
+    font: inherit;
+    padding: .5rem 2rem;
+    margin: 1rem 2rem;
+    cursor: pointer;
+}
+
+.modal_action:hover,
+.modal_action:active {
+    background: #66bf00;
+    border-color: #66bf00;
+    color: black;
+}
+
+.modal_action--negative {
+    background: tomato;
+    border-color: tomato;
+}
+
+.modal_action--negative:hover,
+.modal_action--negative:active {
+    background: #ff1111;
+    border-color: #ff1111;
+    color: black;
+}
+
+.modal input {
+    margin: 1rem;
+    border-radius: 10px;
+    border-color:black;
+    padding: 4px 45px 4px 15px;
+}
+
+.done-icon {
+    text-align: center;
+    color: #66bf00;
+    font-size: 4rem;
+    padding-top: 1rem;
+}
+
+.done-title {
+    text-align: center;
+    color:black;
+    font-size: 2rem;
+    padding: 1rem 0;
+}
+
+.unavailable-icon {
+    text-align: center;
+    color: tomato;
+    font-size: 4rem;
+    padding-top: 1rem;
+}
+
+.calling-icon {
+    text-align: center;
+    color: gray;
+    font-size: 4rem;
+    padding-top: 1rem;
+}
+
+.modal_call {
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: tomato;
+    transform: rotateZ(135deg);
+    border-radius: 50%;
+    border: white;
+    background-color: white;
+}
+
+.modal_call:hover {
+    color: red;
+}
+
+
+
+
+
+
+
+@media(max-width: 430px){
+
+    #filterInput {
+        padding: 4px 0px 4px 5px;
+    }
+
+    #addInput {
+        padding: 4px 0px 4px 5px;
+    }
+}
+
+
+@media(max-width: 370px){
+
+    #filterInput {
+        padding: 4px 0px 4px 5px;
+    }
+
+    #addInput {
+        padding: 4px 0px 4px 5px;
+    }
+
+    .too-small{
+        display: block;
+        font-size: 2rem;
+        margin: 10px;
+        background-color: tomato;
+        z-index: 15;
+        height: 150vh;
+        position: fixed;
+        top: 0;
+    }
+}

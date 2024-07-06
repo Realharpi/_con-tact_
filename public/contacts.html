@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="contacts-style.css">
+    <link rel="stylesheet" href="smartphone.css">
+</head>
+<body>
+    <div class="smartphone">
+        <img src="images/smartphone.png" alt="">
+    </div>
+
+    <section class="section-container">
+        <div class="parent-container">
+            <h3 class="main-title">My Contacts</h3>
+            <div class="child-container">
+                <p class="icons add"><i class="fa-solid fa-plus"></i></p>
+                <input type="text" id="addInput" placeholder="Add your name" value="" />
+                <p class="icons search"><i class="fa-solid fa-magnifying-glass"></i></p>
+                <input type="text" id="filterInput" placeholder="Search names..." value="" />
+            </div>
+    </section>
+
+    <!-- Modal -->
+    <section class="iiisection-container">
+        <div class="backdrop"></div>
+        <form class="modal edit">
+            <h1 class="modal_title">Enter a new name</h1>
+            <input type="text" class="edit-input" placeholder="Type here...">
+            <div class="modal_actions">
+                <button type="button" class="modal_action" onclick="editName()">Save</button>
+                <button type="button" class="modal_action modal_action--negative" onclick="removeModal()">Cancel</button>
+            </div>
+        </form>
+
+        <div class="modal done">
+            <p class="done-icon"><i class="fa-solid fa-thumbs-up"></i></p>
+            <h1 class="done-title">Done!</h1>
+        </div>
+
+        <div class="modal delete">
+            <h1 class="modal_title">Are you sure?</h1>
+            <div class="modal_actions">
+                <button type="button" class="modal_action" onclick="deleteContact()">Yes</button>
+                <button type="button" class="modal_action modal_action--negative" onclick="removeModal()">No</button>
+            </div>
+        </div>
+
+        <div class="modal calling">
+            <p class="calling-icon"><i class="fa-solid fa-user-tie"></i></p>
+            <h1 class="calling-title">Calling...</h1>
+            <button type="button" class="modal_call" onclick="removeModal()"><i class="fa-solid fa-phone"></i></button>
+        </div>
+
+        <div class="modal unavailable">
+            <p class="unavailable-icon"><i class="fa-solid fa-thumbs-down"></i></p>
+            <h1 class="unavailable-title">This feature isn't available at the moment.</h1>
+        </div>
+    </section>
+
+    <script src="contacts-app.js"></script>
+</body>
+</html>
