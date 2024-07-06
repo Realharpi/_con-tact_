@@ -1,0 +1,13 @@
+.smartphone {
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    z-index: 5;
+    pointer-events: none;       /* Mouse will not interactive with it */
+}
+
+.smartphone img {
+    height: 100vh;
+    background-color: transparent;
+    pointer-events: none;          /* Mouse will not interactive with it */
+}

@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "harpi-portfolio"
+  },
+  "targets": {
+    "harpi-portfolio": {
+      "hosting": {
+        "_con-tact_": [
+          "contacts-724"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}
