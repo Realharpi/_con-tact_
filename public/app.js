@@ -1,5 +1,41 @@
 // *******LIST********
 let contacts = ["Liam", "Olivia", "Noah", "Emma", "Oliver", "Charlotte", "Elijah", "Amelia", "James", "Ava", "William", "Sophia", "Benjamin", "Karen", "Isabella", "Lucas", "Mia", "Henry", "Evelyn", "Theodore", "Harper", "Mary", "David", "Michael", "John", "Robert", "Richard", "Charles", "Christopher", "Daniel", "Lisa", "Sarah", "Susan", "Linda", "Elizabeth", "Jennifer", "Andrew", "Anthony", "Mark", "Kevin", "Emily", "Sandra", "Carol", "Amanda", "Bethany", "Edward", "Ronald", "Ryan", "Cynthia", "Laura", "Amy", "Gary", "Eric", "Barbara", "Andy", "George", "Harvey", "Mike", "Louis", "Adam", "Jerry", "Tom", "Norton"]
+
+
+// Pulling from backend
+
+fetch("contacts.json")
+  .then((response) => response.json())
+  .then((data) => {
+    displayContacts(data);
+    console.log(data[0]);
+  })
+  .catch((error) => console.error("Error fetching the contacts data:", error));
+
+
+
+// Function to display the burgers from JSON
+function displayContacts(contacts) {
+  
+  contacts.forEach(contact => {
+
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let eachContact
 let firstLetter
 
