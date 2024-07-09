@@ -67,7 +67,7 @@ body {
 }
 
 
-#addInput {
+#addName, #addNumber {
     display: none;
     width: 120px;
     border-radius: 10px;
@@ -80,7 +80,11 @@ body {
     z-index: 10;
 }
 
-.add-container #addInput {
+#addNumber {
+    top: 4.5rem;
+}
+
+.add-container #addName, .add-container #addNumber {
     display: block;
 }
 
@@ -123,7 +127,7 @@ ul {
 li {
     background-color: white;
     color: black;
-    padding-bottom: .2rem;
+    padding: .5rem 0;
 }
 
 li:hover {
@@ -133,23 +137,33 @@ li:hover {
 
 /* When the list is open */
 li.height {
-    height: 60px;
+    font-weight: bold;
+    background-color: rgb(225, 225, 225);
+}
+
+li.height .phoneNumber {
+    padding: .75rem 0;
 }
 
 li.height .list-icons {
     display: inline-block;
-    padding: 10px;
+    margin: 0 10px;
+    position: relative;
 }
 
 li .hide {
     display: none;
 }
 
+
+/* Tooltip text */
 .list-icons span {
-    visibility: hidden;
+    width: 60px;
+    display: none;
     padding: .2rem;
     position: absolute;
-    top: 4.5rem;
+    top: -2rem;
+    left: -1.5rem;
     background-color: rgb(225, 225, 225);
 }
 
@@ -159,7 +173,7 @@ li .hide {
 }
 
 .list-icons:hover span {
-    visibility: visible;
+    display: inline-block;
 }
 
 

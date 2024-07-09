@@ -20,7 +20,8 @@
             <h3 class="main-title">My Contacts</h3>
             <div class="child-container">
                 <p class="icons add"><i class="fa-solid fa-plus"></i></p>
-                <input type="text" id="addInput" placeholder="Add your name" value="" />
+                <input type="text" id="addName" placeholder="Add name..." value="" required/>
+                <input type="text" id="addNumber" placeholder="Add number..." value="" required/>
                 <p class="icons search"><i class="fa-solid fa-magnifying-glass"></i></p>
                 <input type="text" id="filterInput" placeholder="Search names..." value="" />
             </div>
@@ -30,8 +31,9 @@
     <section class="iiisection-container">
         <div class="backdrop"></div>
         <form class="modal edit">
-            <h1 class="modal_title">Enter a new name</h1>
-            <input type="text" class="edit-input" placeholder="Type here...">
+            <h1 class="modal_title">Edit name or number</h1>
+            <input type="text" class="editName" placeholder="Type name here...">
+            <input type="text" class="editNumber" placeholder="Type number here...">
             <div class="modal_actions">
                 <button type="button" class="modal_action" onclick="editName()">Save</button>
                 <button type="button" class="modal_action modal_action--negative" onclick="removeModal()">Cancel</button>
@@ -63,6 +65,7 @@
         </div>
     </section>
 
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
+     <script src="frontend.js"></script>
 </body>
 </html>
