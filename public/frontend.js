@@ -1,4 +1,5 @@
-let contacts = []; let getName; let eachName; let eachNumber;
+let contacts = []; let getName; let eachName; let eachNumber; let currentList; let currentListName; // currentListName is which name-list is selected or opened
+
 
 // Pulling from backend
 fetch("/contacts.json")
@@ -20,17 +21,66 @@ function createIISection() {
 // Function to display the contacts from JSON
 function displayContacts(contacts) {
   getSection = document.querySelector(".iisection-container")
+  getFavorite = document.querySelector(".favorite")
   getSection.innerHTML = "";     // Removing existing contacts when we update the contacts, we want only the new contacts to appear that's why we removed all the existing contacts 
-  
+  let favoriteCalled = 0;       // If favoriteCalled is 0 meaning, favorite features haven't been created. But if it's 1, it's been created and we can skip creating them again.
   
   contacts.forEach((eachContact, index) => {
     eachName = eachContact.name;
     eachNumber = eachContact.phone;
+    let firstLetter = eachName[0];        // for creating a Alphabet sections
 
-    let firstLetter = eachName[0];
+    // Checking and creating favorite container.
+    if (eachContact.favorite && eachContact.favorite === "Y") {
+      if (favoriteCalled === 0) {
+        let newDivParentContainer = document.createElement("div");
+        newDivParentContainer.setAttribute("class", "parent-container");
+        getSection.appendChild(newDivParentContainer);
 
-    // Creating all the divs, h3 and list
-    // if First letter container (A-container) doesn't exist, then create it.
+        let newDivFavorite = document.createElement("div");
+        newDivFavorite.setAttribute("class", "favorite");
+        newDivParentContainer.appendChild(newDivFavorite);
+
+        let newLetterTitle = document.createElement("h3");
+        newLetterTitle.innerText = "Favorites";
+        newDivFavorite.appendChild(newLetterTitle);
+
+        let newUnorderedList = document.createElement("ul");
+        newUnorderedList.setAttribute("class", "unordered-list");
+        newDivFavorite.appendChild(newUnorderedList);
+
+        const newList = document.createElement("li");
+        const newText = document.createTextNode(eachName);
+        newList.appendChild(newText);
+        newUnorderedList.appendChild(newList);
+
+        // Add Event listner to each list and it will listen for a click.
+        newList.addEventListener("click", showOptions)
+
+        // Add a data attribute to identify the contact
+        newList.setAttribute('data-index', index);
+
+        createEditBar(newList, eachNumber);
+        favoriteCalled++;
+      } else if (favoriteCalled >= 0){
+        newUnorderedList = document.querySelector(".favorite .unordered-list")
+        const newList = document.createElement("li");
+        const newText = document.createTextNode(eachName);
+        newList.appendChild(newText);
+        newUnorderedList.appendChild(newList);
+
+        // Add Event listner to each list and it will listen for a click.
+        newList.addEventListener("click", showOptions);
+
+        // Add a data attribute to identify the contact
+        newList.setAttribute('data-index', index);
+
+        createEditBar(newList, eachNumber);
+      }
+    }
+
+    // Creating all the Alphabet container, Title and Name's list.
+    // if First-letter container (A-container) doesn't exist, then create it and then add names in it.
     if (!document.querySelector(`.${firstLetter}-container`)) {
       let newDivParentContainer = document.createElement("div");
       newDivParentContainer.setAttribute("class", "parent-container");
@@ -62,7 +112,8 @@ function displayContacts(contacts) {
       createEditBar(newList, eachNumber);
 
       // If first letter container exists then only create the list and append it to the that container.
-    } else {
+    } // if First-letter container exists, then only add names in it.
+    else if (document.querySelector(`.${firstLetter}-container`)){
       const newList = document.createElement("li");
       const newText = document.createTextNode(eachName);
       newList.appendChild(newText);
@@ -81,106 +132,150 @@ function displayContacts(contacts) {
     }
   });
 
+  // Show Options by clicking on the name.
+  function showOptions(event) {
+    // Passing down the newList using event.
+    currentList = event.currentTarget
+    currentListName = currentList.innerText
+
+    currentList.classList.toggle("height");
+    currentList.lastChild.classList.toggle("hide");
+
+    // If clicked on different item than current, open the new item and close the current item
+    getAllList = document.querySelectorAll("li");
+    getAllList.forEach((eachList) => {
+      if (eachList !== currentList) {
+        eachList.classList.remove("height");
+        eachList.lastChild.classList.add("hide");
+      }
+    });
+  }
+
   // Creating all the icons in the edit bar
   function createEditBar(list, number) {
+    // Container
     let newDiv = document.createElement("div");
     newDiv.setAttribute("class", "hide");
     list.appendChild(newDiv);
 
-    let iParagraph = document.createElement("p");
-    iParagraph.setAttribute("class", "phoneNumber");
-    iParagraph.innerText = number;
-    newDiv.appendChild(iParagraph);
+    // Phone number
+    let numberPara = document.createElement("p");
+    numberPara.setAttribute("class", "phoneNumber");
+    numberPara.innerText = number;
+    newDiv.appendChild(numberPara);
 
-    let iiParagraph = document.createElement("p");
-    iiParagraph.setAttribute("class", "list-icons phone");
-    newDiv.appendChild(iiParagraph);
+    // Phone Icon
+    let phonePara = document.createElement("p");
+    phonePara.setAttribute("class", "list-icons phone");
+    newDiv.appendChild(phonePara);
 
-    let iSpan = document.createElement("span");
-    iSpan.innerText = "Call";
-    iiParagraph.appendChild(iSpan);
+    let phoneSpan = document.createElement("span");
+    phoneSpan.innerText = "Call";
+    phonePara.appendChild(phoneSpan);
 
-    let iIcon = document.createElement("i");
-    iIcon.setAttribute("class", "fa-solid fa-phone");
-    iiParagraph.appendChild(iIcon);
+    let phoneIcon = document.createElement("i");
+    phoneIcon.setAttribute("class", "fa-solid fa-phone");
+    phonePara.appendChild(phoneIcon);
 
-    // When phone icon is clicked,
-    iIcon.addEventListener("click", () => {
+    // When the phone icon is clicked,...
+    phoneIcon.addEventListener("click", () => {
       currentModal = modalCalling;
       addAnimation(currentModal);
       currentModal.addEventListener("click", removeModal);
     });
 
-    let iiiParagraph = document.createElement("p");
-    iiiParagraph.setAttribute("class", "list-icons message");
-    newDiv.appendChild(iiiParagraph);
+    // Message Icon
+    let messagePara = document.createElement("p");
+    messagePara.setAttribute("class", "list-icons message");
+    newDiv.appendChild(messagePara);
 
-    let iiSpan = document.createElement("span");
-    iiSpan.innerText = "Message";
-    iiiParagraph.appendChild(iiSpan);
+    let messageSpan = document.createElement("span");
+    messageSpan.innerText = "Message";
+    messagePara.appendChild(messageSpan);
 
-    let iiIcon = document.createElement("i");
-    iiIcon.setAttribute("class", "fa-solid fa-message");
-    iiiParagraph.appendChild(iiIcon);
+    let messageIcon = document.createElement("i");
+    messageIcon.setAttribute("class", "fa-solid fa-message");
+    messagePara.appendChild(messageIcon);
 
-    iiIcon.addEventListener("click", () => {
+    // When the message icon is clicked,...
+    messageIcon.addEventListener("click", () => {
       currentModal = modalUnavailable;
       addAnimation(currentModal);
       currentModal.addEventListener("click", removeModal);
     });
 
-    let ivParagraph = document.createElement("p");
-    ivParagraph.setAttribute("class", "list-icons edit");
-    newDiv.appendChild(ivParagraph);
+    // Favorite Icon
+    let favoritePara = document.createElement("p");
+    favoritePara.setAttribute("class", "list-icons favorite");
+    newDiv.appendChild(favoritePara);
 
-    let iiiSpan = document.createElement("span");
-    iiiSpan.innerText = "Edit";
-    ivParagraph.appendChild(iiiSpan);
+    let favoriteSpan = document.createElement("span");
+    favoriteSpan.innerText = "Edit";
+    favoritePara.appendChild(favoriteSpan);
 
-    let iiiIcon = document.createElement("i");
-    iiiIcon.setAttribute("class", "fa-solid fa-pen-to-square");
-    ivParagraph.appendChild(iiiIcon);
+    let favoriteIcon = document.createElement("i");
+    favoriteIcon.setAttribute("class", "fa-solid fa-heart");
+    favoritePara.appendChild(favoriteIcon);
 
-    iiiIcon.addEventListener("click", () => {
+    // When the favorite icon is clicked,...
+    favoriteIcon.addEventListener("click", ()=> {
+
+      // Find the contact object by name
+      const contact = contacts.find(c => c.name === currentListName);
+
+      if(!contact.favorite || contact.favorite === "N") {
+        contact["favorite"] = "Y";
+
+        displayContacts(contacts); // Update UI
+        updateContactsOnServer(contacts); // Update contacts on server
+        
+        // Showing Modal
+        currentModal = modalDone;
+        addAnimation(currentModal);
+      } else if (contact.favorite === "Y") {
+        contact.favorite = "N";
+        displayContacts(contacts); // Update UI
+        updateContactsOnServer(contacts); // Update contacts on server
+      }
+      
+    });
+
+    // Edit Icon
+    let editPara = document.createElement("p");
+    editPara.setAttribute("class", "list-icons edit");
+    newDiv.appendChild(editPara);
+
+    let editSpan = document.createElement("span");
+    editSpan.innerText = "Edit";
+    editPara.appendChild(editSpan);
+
+    let editIcon = document.createElement("i");
+    editIcon.setAttribute("class", "fa-solid fa-pen-to-square");
+    editPara.appendChild(editIcon);
+
+    // When the edit icon is clicked,...
+    editIcon.addEventListener("click", () => {
       currentModal = modalEdit;
       addAnimation(currentModal);
     });
 
-    let vParagraph = document.createElement("p");
-    vParagraph.setAttribute("class", "list-icons trash");
-    newDiv.appendChild(vParagraph);
+    // Delete Icodelete
+    let deletePara = document.createElement("p");
+    deletePara.setAttribute("class", "list-icons trash");
+    newDiv.appendChild(deletePara);
 
-    let ivSpan = document.createElement("span");
-    ivSpan.innerText = "Delete";
-    vParagraph.appendChild(ivSpan);
+    let deleteSpan = document.createElement("span");
+    deleteSpan.innerText = "Delete";
+    deletePara.appendChild(deleteSpan);
 
-    let ivIcon = document.createElement("i");
-    ivIcon.setAttribute("class", "fa-solid fa-trash");
-    vParagraph.appendChild(ivIcon);
+    let deleteIcon = document.createElement("i");
+    deleteIcon.setAttribute("class", "fa-solid fa-trash");
+    deletePara.appendChild(deleteIcon);
 
-    ivIcon.addEventListener("click", () => {
+    // When the delete icon is clicked,...
+    deleteIcon.addEventListener("click", () => {
       currentModal = modalDelete;
       addAnimation(currentModal);
-    });
-  }
-
-  // Show Options by clicking on the name.
-  function showOptions(event) {
-    // Passing down the newList using event.
-    const newList = event.currentTarget
-
-    getName = newList
-
-    newList.classList.toggle("height");
-    newList.lastChild.classList.toggle("hide");
-
-    // If clicked on different item than current, open the new item and close the current item
-    getAllList = document.querySelectorAll("li");
-    getAllList.forEach((eachList) => {
-      if (eachList !== newList) {
-        eachList.classList.remove("height");
-        eachList.lastChild.classList.add("hide");
-      }
     });
   }
 }
@@ -260,7 +355,6 @@ function hitEnter(event) {
       event.currentTarget.parentNode.classList.toggle("add-container")
       getAddName.value = '';  getAddNumber.value = '';
 
-      // const newContact = { name: newName, phone: newNumber };
       contacts.push({ name: newName, phone: newNumber }); // Add new contact to local array
 
       console.log(contacts)
@@ -355,42 +449,39 @@ function timeOut() {
 }
 
 // ****** Delete Contact*******
-let deleteItem
-
 function deleteContact() {
-  deleteItem = getName.innerText
-
+  getName = currentList.innerText
   for(let i=0; i<contacts.length; i++){
-    if(contacts[i].name === deleteItem){
+    if(contacts[i].name === getName){
       contacts.splice(i, 1)
     }
   }
   displayContacts(contacts)
-  deleteListItem(deleteItem)
-  showModalDelay(modalDelete)
+  deleteListItem(getName)
   console.log(contacts)
+  showModalDelay(modalDelete)
   updateContactsOnServer(contacts);
 }
   
-function deleteListItem(deleteItem){
+function deleteListItem(current){
   let getAllList = document.querySelectorAll(".unordered-list li")
 
   getAllList.forEach((eachList) => {
-    if(eachList.textContent === deleteItem){
+    if(eachList.textContent === current){
       eachList.parentElement.removeChild(eachList)
     }
   })
 }
 
 function deleteContactEdit() {
-  deleteItem = getList.textContent
+  current = getList.textContent
 
   for(let i=0; i<eachName.length; i++){
-    if(eachName[i] === deleteItem){
+    if(eachName[i] === current){
       eachName.splice(i, 1)
     }
   }
-  deleteListItem(deleteItem)
+  deleteListItem(current)
   showModalDelay(modalEdit)
 }
 
